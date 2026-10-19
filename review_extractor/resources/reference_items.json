@@ -1,0 +1,514 @@
+[
+  {
+    "name": "Citation",
+    "export_heading": "Citation",
+    "definition": "",
+    "instructions": "",
+    "data_type": "text",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 0,
+    "context": {},
+    "keywords": [],
+    "rules": []
+  },
+  {
+    "name": "Link",
+    "export_heading": "Link",
+    "definition": "",
+    "instructions": "",
+    "data_type": "text",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 1,
+    "context": {},
+    "keywords": [],
+    "rules": []
+  },
+  {
+    "name": "Country / setting",
+    "export_heading": "Country / setting",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 2,
+    "context": {},
+    "keywords": [
+      "setting",
+      "hospital",
+      "country"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Study design",
+    "export_heading": "Study design",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 3,
+    "context": {},
+    "keywords": [
+      "study design",
+      "randomized",
+      "randomised",
+      "controlled"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Mean age",
+    "export_heading": "Mean age",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 4,
+    "context": {},
+    "keywords": [
+      "mean age",
+      "age"
+    ],
+    "rules": []
+  },
+  {
+    "name": "SCI type / AIS",
+    "export_heading": "SCI type / AIS",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 5,
+    "context": {},
+    "keywords": [
+      "SCI",
+      "AIS"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Injury phase",
+    "export_heading": "Injury phase",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 6,
+    "context": {},
+    "keywords": [
+      "chronic",
+      "acute",
+      "subacute"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Time since injury",
+    "export_heading": "Time since injury",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 7,
+    "context": {},
+    "keywords": [
+      "time since injury",
+      "months after injury",
+      "years after injury"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Injury level",
+    "export_heading": "Injury level",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 8,
+    "context": {},
+    "keywords": [
+      "injury level",
+      "cervical",
+      "thoracic"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Etiology / population notes",
+    "export_heading": "Etiology / population notes",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 9,
+    "context": {},
+    "keywords": [
+      "etiology",
+      "aetiology",
+      "population",
+      "inclusion criteria"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Baseline / reported GMS outcome scores",
+    "export_heading": "Baseline / reported GMS outcome scores",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 10,
+    "context": {},
+    "keywords": [
+      "baseline",
+      "GMS",
+      "outcome scores",
+      "LEMS",
+      "WISCI",
+      "10MWT"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Completed / withdrawn",
+    "export_heading": "Completed / withdrawn",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 11,
+    "context": {},
+    "keywords": [
+      "completed",
+      "withdrawn",
+      "withdrawal",
+      "flow diagram"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Adverse events / dropout reason",
+    "export_heading": "Adverse events / dropout reason",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 12,
+    "context": {},
+    "keywords": [
+      "adverse events",
+      "side effects",
+      "dropout",
+      "withdrawal"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Modality / protocol",
+    "export_heading": "Modality / protocol",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 13,
+    "context": {},
+    "keywords": [
+      "modality",
+      "protocol",
+      "rTMS"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Stimulator / device",
+    "export_heading": "Stimulator / device",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 14,
+    "context": {},
+    "keywords": [
+      "stimulator",
+      "device"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Hz / burst pattern",
+    "export_heading": "Hz / burst pattern",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 15,
+    "context": {},
+    "keywords": [
+      "Hz",
+      "burst",
+      "frequency"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Intensity",
+    "export_heading": "Intensity",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 16,
+    "context": {},
+    "keywords": [
+      "intensity",
+      "RMT",
+      "motor threshold"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Pulses / session",
+    "export_heading": "Pulses / session",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 17,
+    "context": {},
+    "keywords": [
+      "pulses",
+      "per session"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Sessions / week",
+    "export_heading": "Sessions / week",
+    "definition": "",
+    "instructions": "",
+    "data_type": "number",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 18,
+    "context": {},
+    "keywords": [
+      "sessions per week",
+      "sessions/week",
+      "weekly"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Total sessions",
+    "export_heading": "Total sessions",
+    "definition": "",
+    "instructions": "",
+    "data_type": "integer",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 19,
+    "context": {},
+    "keywords": [
+      "total sessions",
+      "sessions"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Treatment duration",
+    "export_heading": "Treatment duration",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 20,
+    "context": {},
+    "keywords": [
+      "treatment duration",
+      "weeks"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Total pulses",
+    "export_heading": "Total pulses",
+    "definition": "",
+    "instructions": "",
+    "data_type": "integer",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 21,
+    "context": {},
+    "keywords": [
+      "total pulses",
+      "pulses"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Coil type",
+    "export_heading": "Coil type",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 22,
+    "context": {},
+    "keywords": [
+      "coil",
+      "figure-of-8"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Target location",
+    "export_heading": "Target location",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 23,
+    "context": {},
+    "keywords": [
+      "target",
+      "motor cortex",
+      "neuronavigation"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Control / comparator",
+    "export_heading": "Control / comparator",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 24,
+    "context": {},
+    "keywords": [
+      "control",
+      "comparator",
+      "sham"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Concurrent therapy",
+    "export_heading": "Concurrent therapy",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 25,
+    "context": {},
+    "keywords": [
+      "concurrent therapy",
+      "rehabilitation",
+      "gait training"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Confounding control",
+    "export_heading": "Confounding control",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 26,
+    "context": {},
+    "keywords": [
+      "confounding",
+      "adjustment",
+      "identical"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Primary outcome timing",
+    "export_heading": "Primary outcome timing",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 27,
+    "context": {},
+    "keywords": [
+      "primary outcome",
+      "post-treatment",
+      "posttreatment"
+    ],
+    "rules": []
+  },
+  {
+    "name": "Follow-up timing",
+    "export_heading": "Follow-up timing",
+    "definition": "",
+    "instructions": "",
+    "data_type": "narrative",
+    "allowed_values": [],
+    "units": "",
+    "required": false,
+    "position": 28,
+    "context": {},
+    "keywords": [
+      "follow-up",
+      "follow up"
+    ],
+    "rules": []
+  }
+]

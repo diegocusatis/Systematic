@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "review-extractor"
+version = "0.1.0"
+description = "Local, traceable full-text research extraction with editable Excel designs"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi==0.141.1",
+  "uvicorn==0.53.0",
+  "python-multipart==0.0.32",
+  "pdfplumber==0.11.10",
+  "openpyxl==3.1.5",
+  "regex==2026.9.10",
+]
+
+[project.optional-dependencies]
+semantic = ["sentence-transformers>=5.2,<6", "transformers>=4.51,<6", "rapidfuzz>=3.10,<4"]
+ocr = ["pytesseract>=0.3.13,<0.4"]
+paddle-ocr = ["paddleocr[doc-parser]>=3.6,<4"]
+test = ["pytest==9.1.1", "httpx==0.28.1", "reportlab==5.0.1", "pypdf==6.18.1"]
+browser = ["playwright==1.62.0"]
+
+[project.scripts]
+review-extractor = "review_extractor.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["review_extractor*"]
+
+[tool.setuptools.package-data]
+review_extractor = ["resources/*.json", "static/*", "static/vendor/pdfjs/LICENSE", "static/vendor/pdfjs/build/*", "static/vendor/pdfjs/web/*", "static/vendor/pdfjs/cmaps/*", "static/vendor/pdfjs/standard_fonts/*", "static/vendor/pdfjs/wasm/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["browser: optional real browser end-to-end tests", "semantic: optional real offline sentence model integration"]
+addopts = "-ra"

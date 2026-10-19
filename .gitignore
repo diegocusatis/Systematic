@@ -179,3 +179,17 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Private local review data and generated verification artifacts
+.review-data/
+review-data/
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+test-results/
+playwright-report/
+.browser-test-data/
+tmp/
+outputs/

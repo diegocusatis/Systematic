@@ -1,0 +1,9 @@
+include README.md AGENTS.md ARCHITECTURE.md IMPLEMENTATION_PLAN.md VERIFICATION.md THIRD_PARTY_NOTICES.md
+include requirements.txt requirements-dev.txt
+recursive-include demo *.pdf *.xlsx *.md *.py
+recursive-include scripts *.py
+recursive-include tests *.py
+recursive-include .github *.yml
+recursive-include review_extractor/resources *.json
+recursive-include review_extractor/static *
+global-exclude __pycache__ *.py[cod]
