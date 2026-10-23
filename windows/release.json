@@ -1,0 +1,25 @@
+{
+  "product": "Systematic",
+  "supported_python": ["3.12", "3.11"],
+  "architecture": "64bit",
+  "data_format": 1,
+  "python_download": {
+    "version": "3.12.10",
+    "url": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe",
+    "md5": "5eddb0b6f12c852725de071ae681dde4",
+    "signer": "Python Software Foundation"
+  },
+  "tesseract": {
+    "version": "5.4.0.20240606",
+    "url": "https://github.com/UB-Mannheim/tesseract/releases/download/v5.4.0.20240606/tesseract-ocr-w64-setup-5.4.0.20240606.exe",
+    "sha256": "c885fff6998e0608ba4bb8ab51436e1c6775c2bafc2559a19b423e18678b60c9"
+  },
+  "semantic_model": {
+    "repo": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "main"
+  },
+  "vc_runtime": {
+    "url": "https://aka.ms/vs/17/release/vc_redist.x64.exe",
+    "signer": "Microsoft Corporation"
+  }
+}

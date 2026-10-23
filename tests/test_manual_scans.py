@@ -75,6 +75,7 @@ def test_duplicate_clicks_do_not_queue_repeated_scans(tmp_path, monkeypatch):
     service = ReviewService(tmp_path)
     r = service.create_review({'name': 'Concurrent requests'})['id']
     p = service.add_paper(r, {'processing_status': 'ready', 'pdf_metadata': {}})['id']
+    service.update_paper(r, p, {'search_progress': 100})
     entered, release = Event(), Event()
     calls = []
 
@@ -88,6 +89,7 @@ def test_duplicate_clicks_do_not_queue_repeated_scans(tmp_path, monkeypatch):
     try:
         assert scans.submit(r, p)
         assert entered.wait(5)
+        assert service.get_paper(r, p)['search_progress'] == 0
         with ThreadPoolExecutor(max_workers=4) as requests:
             assert not any(requests.map(lambda _: scans.submit(r, p), range(8)))
         assert len(calls) == 1
@@ -95,6 +97,29 @@ def test_duplicate_clicks_do_not_queue_repeated_scans(tmp_path, monkeypatch):
         release.set()
         scans.close()
         service.store.close()
+
+
+def test_first_field_is_identified_before_search_returns(tmp_path, monkeypatch):
+    from review_extractor import service as module
+    with TestClient(create_app(tmp_path, run_background=False)) as client:
+        r = review(client)
+        add_item(client, r, name='Year')
+        p = upload(client, r)['id']
+        service = client.app.state.service
+        original = module.search_item
+        observed = []
+
+        def inspect(*args, **kwargs):
+            paper = service.get_paper(r, p)
+            observed.append((paper['search_progress'], paper['search_message']))
+            return original(*args, **kwargs)
+
+        monkeypatch.setattr(module, 'search_item', inspect)
+        ok(client.post(f'/api/reviews/{r}/refresh'))
+        assert observed == [(0, 'Searching Year (1 of 1)')]
+        paper = service.get_paper(r, p)
+        assert paper['search_status'] == 'current'
+        assert paper['search_message'] == ''
 
 
 def test_failed_search_can_be_retried_without_reextracting_pdf(tmp_path, monkeypatch):

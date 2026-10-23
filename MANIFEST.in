@@ -1,5 +1,8 @@
 include README.md AGENTS.md ARCHITECTURE.md IMPLEMENTATION_PLAN.md VERIFICATION.md THIRD_PARTY_NOTICES.md
 include requirements.txt requirements-dev.txt
+include WINDOWS_SETUP.md
+include requirements-extras.txt
+recursive-include windows *.py *.cs *.json *.ps1
 recursive-include demo *.pdf *.xlsx *.md *.py
 recursive-include scripts *.py
 recursive-include tests *.py

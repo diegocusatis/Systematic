@@ -5,6 +5,7 @@ from functools import wraps
 import math
 import os
 import re
+import shutil
 from pathlib import Path
 from uuid import uuid4
 
@@ -201,6 +202,30 @@ class ReviewService:
 
     def get_review(self, review_id):
         return self._review(review_id)
+
+    def delete_review(self, review_id, confirm_name):
+        """Permanently delete a review, its records and its stored PDF copies.
+
+        The caller must repeat the exact review name, so a stray request cannot
+        remove work. Files are only removed inside this workspace's pdfs folder.
+        """
+        review = self._review(review_id)
+        if not isinstance(confirm_name, str) or confirm_name.strip() != review["name"].strip():
+            raise ValueError("Type the review name exactly to confirm deletion.")
+        papers = self.store.list("papers", review_id=review_id)
+        self.store.delete_review(review_id)
+        storage = (self.data_dir / "pdfs").resolve()
+        for paper in papers:
+            try:
+                path = Path(paper.get("path") or "").resolve()
+                if path.is_file() and path.is_relative_to(storage):
+                    path.unlink()
+            except OSError:
+                pass
+        folder = storage / review_id
+        if folder.is_dir() and folder.resolve().is_relative_to(storage):
+            shutil.rmtree(folder, ignore_errors=True)
+        return {"deleted": review_id, "name": review["name"], "papers": len(papers)}
 
     @transaction
     def update_review(self, review_id, data):
@@ -533,7 +558,7 @@ class ReviewService:
     def update_paper(self, review_id, paper_id, data):
         before = self._paper(review_id, paper_id)
         paper = deepcopy(before)
-        for key in before.keys() - {"id", "review_id", "created_at", "sha256", "path", "filename"}:
+        for key in (before.keys() | {"search_progress", "search_message"}) - {"id", "review_id", "created_at", "sha256", "path", "filename"}:
             if key in data:
                 paper[key] = deepcopy(data[key])
         self._validate_paper(paper)
@@ -682,7 +707,8 @@ class ReviewService:
                 current = self._paper(review_id, paper["id"])
                 if current.get("removed"):
                     continue
-                current.update(search_status="refreshing", search_progress=0, search_errors=[])
+                current.update(search_status="refreshing", search_progress=0, search_errors=[],
+                               search_message="Preparing search")
                 self.store.put("papers", current)
                 review = self._review(review_id)
                 document_version = current.get("document_version", 0)
@@ -695,6 +721,10 @@ class ReviewService:
             collected, errors, warnings = {}, [], []
             chunks = chunk_document(pages)
             for index, item in enumerate(items):
+                with self.store.transaction():
+                    current = self._paper(review_id, paper["id"])
+                    current["search_message"] = f'Searching {item["name"]} ({index + 1} of {len(items)})'
+                    self.store.put("papers", current)
                 feedback = dict(config=learning["config"], target_document_fingerprints=target_fingerprints,
                     target_paper_id=paper["id"], examples=[e for e in learning["examples"] if e["item_id"] == item["id"] and e["eligible"]])
                 result = search_item(pages, item, metadata, semantic=self.semantic, chunks=chunks,
@@ -744,7 +774,7 @@ class ReviewService:
                          and config_for(self._review(review_id))["revision"] == learning_revision
                          and current.get("pdf_metadata") == metadata
                          and current.get("document_version", 0) == document_version and current["processing_status"] == "ready")
-                current.update(search_status=("partial" if errors else "current") if fresh else "stale", search_version=review["rule_version"], search_progress=100, search_errors=errors,
+                current.update(search_status=("partial" if errors else "current") if fresh else "stale", search_version=review["rule_version"], search_progress=100, search_errors=errors, search_message="",
                                retrieval_engine_version=ENGINE_VERSION,
                                retrieval_model_config=self.retrieval_model_config(),
                                retrieval_warnings=list(dict.fromkeys(warnings)),

@@ -22,6 +22,21 @@ weights; the base installation and existing retrieval remain available.
 
 ## Install and launch on Windows
 
+**For lab users:** double-click **Systematic-Setup.exe** from the repository or
+the Windows release download. Setup checks for supported 64-bit Python, finds
+your previous Systematic automatically, carries over its reviews, extraction
+templates, accepted evidence and verification records (checked record by
+record), installs the app, and creates **Start Systematic** on your desktop. Use that shortcut after setup. See
+[Windows setup, updates, and recovery](WINDOWS_SETUP.md) for the complete guide.
+
+Setup stores reviews permanently in `%LOCALAPPDATA%\ReviewExtractor`, separate
+from the application. Updates verify copied reviews and PDF checksums and keep
+the previous data as a backup. Original template/export workbooks can also be
+selected for preservation. Conflicting copies of the same review require
+reconciliation; setup does not silently choose between them.
+
+The following terminal commands remain available for development/manual use:
+
 Install **Python 3.11 or newer** (3.12 recommended). Open PowerShell in this repository:
 
 ```powershell

@@ -312,7 +312,8 @@ function searchStatusLabel(paper) {
   if(paper.search_status==='partial')return 'Scan incomplete · partial results';
   if(paper.search_status==='stale')return 'Awaiting manual scan';
   if(paper.search_status==='error')return 'Scan failed';
-  return `Search ${paper.search_status || 'pending'}${paper.search_status==='refreshing' ? ` · ${paper.search_progress || 0}%` : ''}`;
+  if(paper.search_status==='refreshing')return `${paper.search_message || 'Searching'} · ${paper.search_progress || 0}%`;
+  return `Search ${paper.search_status || 'pending'}`;
 }
 
 function renderPapers() {
@@ -677,6 +678,22 @@ bind('#create-review-form','submit',async()=>{
   $('#create-review-form').reset();await loadReviews(review.id);toast('Review created. Preview the reference headings or import your own design.');
 });
 bind('#review-select','change',()=>selectReview($('#review-select').value));
+bind('#delete-review','click',()=>{
+  if(!state.review||!keepUnsaved())return;
+  $('#delete-review-name').textContent=state.review.name;$('#delete-review-confirm').value='';
+  $('#confirm-delete-review').disabled=true;$('#delete-review-dialog').showModal();$('#delete-review-confirm').focus();
+});
+$('#delete-review-confirm').addEventListener('input',()=>{
+  $('#confirm-delete-review').disabled=$('#delete-review-confirm').value.trim()!==(state.review?.name||'').trim();
+});
+bind('#delete-review-form','submit',async()=>{
+  const result=await api(reviewPath(),{method:'DELETE',body:{confirm_name:$('#delete-review-confirm').value.trim()}});
+  $('#delete-review-dialog').close();
+  localStorage.removeItem('systematic.review_id');
+  const remaining=await api('/api/reviews');
+  if(!remaining.length){location.reload();return;}
+  await loadReviews(remaining[0].id);toast(`Deleted “${result.name}”.`);
+});
 bind('#review-settings-form','submit',async()=>{
   state.review=await api(reviewPath(),{method:'PATCH',body:{name:$('#settings-name').value.trim(),reviewer:$('#settings-reviewer').value.trim()}});
   const option=$('#review-select').selectedOptions[0];if(option)option.textContent=state.review.name;renderReviewSummary();saved('Review details saved');toast('Review details saved.');
@@ -1051,7 +1068,7 @@ setInterval(async()=>{
   try {
     const papers=await api(`/api/reviews/${id}/papers`);if(id!==state.review?.id)return;
     const previous=state.paper;
-    const changed=JSON.stringify(papers.map(p=>[p.id,p.processing_status,p.processing_progress,p.search_status,p.search_progress,p.search_version,p.document_version]))!==JSON.stringify(state.papers.map(p=>[p.id,p.processing_status,p.processing_progress,p.search_status,p.search_progress,p.search_version,p.document_version]));
+    const changed=JSON.stringify(papers.map(p=>[p.id,p.processing_status,p.processing_progress,p.search_status,p.search_progress,p.search_message,p.search_version,p.document_version]))!==JSON.stringify(state.papers.map(p=>[p.id,p.processing_status,p.processing_progress,p.search_status,p.search_progress,p.search_message,p.search_version,p.document_version]));
     if(!changed)return;
     state.papers=papers;renderPapers();renderReviewSummary();renderSelectors();
     if(state.paper && previous?.id===state.paper.id) {

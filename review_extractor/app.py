@@ -114,6 +114,12 @@ def create_app(data_dir: Path | str | None = None, *, run_background: bool = Tru
     def review(r: str):
         return service.get_review(r)
 
+    @app.delete("/api/reviews/{r}")
+    def delete_review(r: str, data: dict):
+        if scans.busy(r):
+            raise ValueError("A scan is running for this review. Wait for it to finish, then delete the review.")
+        return service.delete_review(r, data.get("confirm_name"))
+
     @app.patch("/api/reviews/{r}")
     def update_review(r: str, data: dict):
         return service.update_review(r, data)

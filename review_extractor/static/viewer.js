@@ -1,6 +1,7 @@
+import './polyfills.js';
 import { getDocument, GlobalWorkerOptions, TextLayer } from '/static/vendor/pdfjs/build/pdf.mjs';
 
-GlobalWorkerOptions.workerSrc = '/static/vendor/pdfjs/build/pdf.worker.mjs';
+GlobalWorkerOptions.workerSrc = '/static/pdf-worker.js';
 
 /** Original PDF renderer. Stored boxes use visible CropBox top-left coordinates,
  * including rotation, so viewport/stored dimensions supply the exact transform. */

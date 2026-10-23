@@ -30,8 +30,13 @@ class ScanQueue:
                         paper.get('retrieval_engine_version') != ENGINE_VERSION or
                         paper.get('retrieval_model_config') != self.service.retrieval_model_config()):
                     updates['search_status'] = 'stale'
+                    updates['search_message'] = ''
                 if updates:
                     self.service.update_paper(review['id'], paper['id'], updates)
+
+    def busy(self, review_id):
+        with self.lock:
+            return any(key[0] == review_id for key in self.pending)
 
     def submit(self, review_id, paper_id, *, reprocess=False):
         # Validate ownership before reserving work. A duplicate click must not
@@ -45,7 +50,8 @@ class ScanQueue:
                 return False
             self.pending.add(key)
         try:
-            updates = {'search_status': 'queued'}
+            updates = {'search_status': 'queued', 'search_progress': 0,
+                       'search_message': 'Waiting to scan'}
             if reprocess or paper['processing_status'] != 'ready':
                 updates['processing_status'] = 'queued'
             self.service.update_paper(review_id, paper_id, updates)
@@ -91,7 +97,7 @@ class ScanQueue:
             with self.service.store.transaction():
                 current = self.service.get_paper(review_id, paper_id)
                 message = f'{type(exc).__name__}: {exc}'
-                current.update(search_status='error', search_errors=[message])
+                current.update(search_status='error', search_errors=[message], search_message='')
                 if stage == 'processing':
                     current.update(processing_status='error', processing_error=message)
                 self.service.store.put('papers', current)

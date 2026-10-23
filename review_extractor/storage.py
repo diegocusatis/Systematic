@@ -134,6 +134,15 @@ class Store:
             rows = self.connection.execute(sql, list(filters.values())).fetchall()
         return [json.loads(row[0]) for row in rows]
 
+    def delete_review(self, review_id):
+        """Remove one review and every record that belongs to it, children first."""
+        order = ("outcome_fields", "feedback", "fields", "evidence", "suggestions", "pages",
+                 "outcomes", "history", "items", "papers")
+        with self.transaction():
+            for table in order:
+                self.connection.execute(f"DELETE FROM {table} WHERE review_id=?", (review_id,))
+            self.connection.execute("DELETE FROM reviews WHERE id=?", (review_id,))
+
     def delete_pages(self, paper_id):
         with self.lock:
             self.connection.execute("DELETE FROM pages WHERE paper_id=?", (paper_id,))

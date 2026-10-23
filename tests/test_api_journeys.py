@@ -316,3 +316,26 @@ def test_interrupted_processing_waits_for_manual_scan_on_new_app_start(tmp_path)
         assert processed["processing_progress"] == 100
         assert processed["search_status"] == "current"
         assert ok(client.get(f"/api/reviews/{r}/papers/{p}/suggestions", params={"item_id": item["id"]}))
+
+
+def test_delete_review_requires_exact_name_and_removes_only_that_review(tmp_path):
+    with TestClient(create_app(tmp_path, run_background=False)) as client:
+        keep = ok(client.post("/api/reviews", json={"name": "Keep me", "reviewer": "R"}), 201)["id"]
+        gone = ok(client.post("/api/reviews", json={"name": "Delete me", "reviewer": "R"}), 201)["id"]
+        for r in (keep, gone):
+            add_item(client, r)
+            upload(client, r)
+        pdf = Path(ok(client.get(f"/api/reviews/{gone}/papers"))[0]["path"])
+        kept_pdf = Path(ok(client.get(f"/api/reviews/{keep}/papers"))[0]["path"])
+        assert pdf.is_file()
+        wrong = client.request("DELETE", f"/api/reviews/{gone}", json={"confirm_name": "Delete"})
+        assert wrong.status_code == 422 and pdf.is_file()
+        result = ok(client.request("DELETE", f"/api/reviews/{gone}", json={"confirm_name": "Delete me"}))
+        assert result["deleted"] == gone and result["papers"] == 1
+        assert client.get(f"/api/reviews/{gone}").status_code == 404
+        assert [r["id"] for r in ok(client.get("/api/reviews"))] == [keep]
+        assert not pdf.exists() and kept_pdf.is_file()
+        assert len(ok(client.get(f"/api/reviews/{keep}/items"))) == 1
+        service = client.app.state.service
+        for table in ("items", "papers", "pages", "history", "suggestions", "fields", "evidence"):
+            assert service.store.list(table, review_id=gone) == []

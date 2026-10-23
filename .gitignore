@@ -193,3 +193,8 @@ playwright-report/
 .browser-test-data/
 tmp/
 outputs/
+.windows-smoke/
+.pytest-installer*/
+
+# Bundled PDF.js runtime is source-controlled despite the generic build/ rule.
+!review_extractor/static/vendor/pdfjs/build/
